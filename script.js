@@ -1,3 +1,5 @@
+"use strict";
+
 const canvas = document.querySelector('#draw');
 const ctx = canvas.getContext('2d');
 canvas.width = window.innerWidth;
@@ -13,26 +15,26 @@ let lastY = 0;
 let hue = 0;
 let direction = true;
 
-canvas.addEventListener('mousedown', (e) => {
+canvas.addEventListener('mousedown', (event) => {
     isDrawing = true;
-    [lastX , lastY] = [e.offsetX, e.offsetY];
+    [lastX , lastY] = [event.offsetX, event.offsetY];
 });
 
 canvas.addEventListener('mousemove', draw);
 canvas.addEventListener('mouseout', () => isDrawing = false);
 canvas.addEventListener('mouseup', () => isDrawing = false);
 
-function draw(e) {
+function draw(event) {
     if(!isDrawing) {
         return;
     }
-    console.log(e);
+    
     ctx.strokeStyle = `hsl(${hue}, 100%, 50%)`;
     ctx.beginPath();
     ctx.moveTo(lastX, lastY);
-    ctx.lineTo(e.offsetX, e.offsetY);
+    ctx.lineTo(event.offsetX, event.offsetY);
     ctx.stroke();
-    [lastX , lastY] = [e.offsetX, e.offsetY];
+    [lastX , lastY] = [event.offsetX, event.offsetY];
 
     hue++;
     if(hue>=360) {
